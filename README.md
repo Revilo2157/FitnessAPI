@@ -9,9 +9,9 @@ Deployed at:
 https://dukefitnessapp.herokuapp.com/
 
 ## Usage: 
-https://dukefitnessapp.herokuapp.com/api/leaderboard/workout
-https://dukefitnessapp.herokuapp.com/api/challenge/username
-https://dukefitnessapp.herokuapp.com/api/stats/username
+https://dukefitnessapp.herokuapp.com/api/leaderboard/workout  
+https://dukefitnessapp.herokuapp.com/api/challenge/username  
+https://dukefitnessapp.herokuapp.com/api/stats/username  
 
 ## [DukeFitnessApp](https://github.com/Revilo2157/dukefitnessapp/)
 
