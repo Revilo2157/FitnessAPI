@@ -1,5 +1,5 @@
-# lyric-api
-API that returns lyrics after searching on lyrics.wikia.com based on Artist and Song.
+# Duke Fitness App
+Server-side API to establish a leaderboard and send challenges to other users.
 
 ## Deploy on Heroku
 
