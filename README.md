@@ -8,9 +8,10 @@ Server-side API to establish a leaderboard and send challenges to other users.
 Deployed at: 
 https://dukefitnessapp.herokuapp.com/
 
-Usage: https://dukefitnessapp.herokuapp.com/api/leaderboard/workout \\
-       https://dukefitnessapp.herokuapp.com/api/challenge/username \\
-       https://dukefitnessapp.herokuapp.com/api/stats/username
+## Usage: 
+https://dukefitnessapp.herokuapp.com/api/leaderboard/workout
+https://dukefitnessapp.herokuapp.com/api/challenge/username
+https://dukefitnessapp.herokuapp.com/api/stats/username
 
 ## [DukeFitnessApp](https://github.com/Revilo2157/dukefitnessapp/)
 
