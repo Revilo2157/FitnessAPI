@@ -1,0 +1,26 @@
+{
+  "name": "lyric-get",
+  "version": "1.0.3",
+  "description": "get lyrics by scraping lyrics-wikia. technically illegal to use this.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Revilo2157/lyricsfromoliver"
+  },
+  "keywords": [
+    "lyric",
+    "wikia",
+    "fetch"
+  ],
+  "author": "Oliver Rodas",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "request": "^2.69.0",
+    "underscore": "^1.8.3",
+    "unirest": "^0.6.0"
+  }
+}
