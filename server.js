@@ -37,9 +37,8 @@ router.get('/', function(req, res) {
      + '\n/challenge/challenger/challenged/workout/amount'
      + '\n/stats/username'
      + '\n/update/username/workout/amount'
- 	 + '\n/leaderboard'});   
+ 	 + '\n/leaderboard'});
 });
-
 // more routes for our API will happen here
 
 router.get('/ping', function(req, res) {
@@ -51,7 +50,7 @@ router.get('/ping', function(req, res) {
 username.txt will be set up as follows
 {
 	Stats : [ { 
-			name : String,
+			workout : String,
 			amount : Int
 		}
 	], 
@@ -65,8 +64,15 @@ username.txt will be set up as follows
 
 leaderboard.txt will be set up as
 {
-	Data: [ 
+	General: [ 
 		{workout: String, username : String, amount : Int},
+	],
+
+	Workouts: [ 
+		{workout: String, data: [
+			{
+				{username: String, amount: Int},
+			}]},
 	]
 }
 
@@ -149,13 +155,13 @@ router.route('/update/:username/:workout/:amount')
 
 					var leaderboard = JSON.parse(data);
 		  			var changed = false;
-		  			for(let i = 0; i < leaderboard.Data.length; i++) {
-		  				if(leaderboard.Data[i].workout.localeCompare(req.params.workout) == 0) {
+		  			for(let i = 0; i < leaderboard.General.length; i++) {
+		  				if(leaderboard.General[i].workout.localeCompare(req.params.workout) == 0) {
 		  					found = true;
-		  					if(leaderboard.Data[i].amount < newAmount) {
+		  					if(leaderboard.General[i].amount < newAmount) {
 		  						changed = true;
-		  						leaderboard.Data[i].amount = newAmount;
-		  						leaderboard.Data[i].username = req.params.username;
+		  						leaderboard.General[i].amount = newAmount;
+		  						leaderboard.General[i].username = req.params.username;
 		  					}
 		  					break;
 		  				}
@@ -163,17 +169,54 @@ router.route('/update/:username/:workout/:amount')
 
 		  			if(!found) {
 		  				changed = true;
-		  				leaderboard.Data.push({workout: req.params.workout, username : req.params.username, amount : newAmount});
+		  				leaderboard.General.push({workout: req.params.workout, username : req.params.username, amount : newAmount});
 		  			}
 
-		  			if(changed) {
-		  				fs.writeFile("leaderboard.txt", JSON.stringify(leaderboard), (err) => {
-							if(err) {
-								res.json(throwError());
-								return;
-							}
-						});
+		  			var workOutfound = false;
+		  			var inserted = false;
+		  			for(let i = 0; i < leaderboard.Workouts.length; i++) {
+		  				if(leaderboard.Workouts[i].workout.localeCompare(req.params.workout) == 0) {
+
+		  					workOutfound = true;
+		  					for(let k = 0; k < leaderboard.Workouts[i].Data.length; k++) {
+
+		  						if(leaderboard.Workouts[i].Data[k].amount < newAmount) {
+		  							inserted = true
+		  							leaderboard.Workouts[i].Data.splice(k, 0, {username: req.params.username, amount: newAmount});
+		  							for(let j = k + 1; j < leaderboard.Workouts[i].Data.length; j++) {
+		  								if(leaderboard.Workouts[i].Data[j].username.localeCompare(req.params.username) == 0) {
+		  									leaderboard.Workouts[i].Data.splice(j, 1);
+		  									break;
+		  								}
+		  							}
+		  							break;
+		  						} else {
+		  							if(leaderboard.Workouts[i].Data[k].username.localeCompare(req.params.username) == 0) {
+		  								inserted = true
+		  								leaderboard.Workouts[i].Data[k].amount = newAmount;
+		  								break;
+		  							}
+		  						}
+		  					}
+		  					if(!inserted) {
+		  						leaderboard.Workouts[i].Data.push({username: req.params.username, amount: newAmount});
+		  					}
+		  				}
+		  				if(workOutfound) {
+		  					break;
+		  				}
 		  			}
+
+		  			if(!workOutfound) {
+		  				leaderboard.Workouts.push({workout: req.params.workout, Data: [{username: req.params.username, amount: newAmount}]});
+		  			}
+
+	  				fs.writeFile("leaderboard.txt", JSON.stringify(leaderboard), (err) => {
+						if(err) {
+							res.json(throwError());
+							return;
+						}
+					});
 
 		  			fs.writeFile(req.params.username + ".txt", JSON.stringify(userData), (err) =>{
 						if(err) {
@@ -285,7 +328,7 @@ app.listen(port);
 fs.access("leaderboard.txt", fs.constants.F_OK, (err) => {
 	if (err) {
 		console.log("Creating a new leaderboard");
-		toWrite = {Data: []};
+		toWrite = {General: [], Workouts: []};
 		fs.writeFile("leaderboard.txt", JSON.stringify(toWrite), (err) => {
 			if(err) {
 				return;

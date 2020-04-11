@@ -1,0 +1,1 @@
+{"Stats":[{"workout":"situps","amount":50}],"Challenges":[{"opponent":"oar5","workout":"Situps","amount":"5"}]}
