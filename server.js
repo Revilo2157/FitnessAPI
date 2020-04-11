@@ -35,7 +35,11 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to lyric-api!\nuse /find/artist/song' });   
+    res.json({ message: 'hooray! welcome to the Duke Fitness API!\nUseage:'
+     + '\n/challenge/username'
+     + '\n/stats/username'
+ 	 + '\n/leaderboard/get/workout'
+ 	 + '\n/leaderboard/update/workout'});   
 });
 
 // more routes for our API will happen here
