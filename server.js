@@ -271,7 +271,7 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 	});
 
 function throwError() {
-	return {message: "", error: "An error occured"};
+	return {message: "", err: "An error occured"};
 }
 
 
