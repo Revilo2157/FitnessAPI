@@ -6,7 +6,8 @@ http://152.3.69.115:8081/
 
 ## Usage: 
    ### Ping:
-   Used to test if the API is online
+   Used to test if the API is online.  
+      
       http://152.3.69.115:8081/api/ping  
       
    
