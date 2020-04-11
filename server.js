@@ -62,6 +62,9 @@ username.txt will be set up as follows
 			opponent : String,
 			workout : String,
 			amount : Int,
+			you : Int,
+			them : Int,
+			completed : Bool
 		}
 	]
 }
@@ -360,10 +363,16 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 
 						challengerData.Challenges.push({opponent: req.params.challenged, 
 														workout: req.params.workout,
-														amount: req.params.amount});
+														amount: req.params.amount,
+														you: 0,
+														them: 0,
+														completed: false});
 						challengedData.Challenges.push({opponent: req.params.challenger, 
 														workout: req.params.workout,
-														amount: req.params.amount});
+														amount: req.params.amount,
+														you: 0,
+														them: 0,
+														completed: false});
 						fs.writeFile(req.params.challenger + ".txt", JSON.stringify(challengerData), (err) =>{
 							if(err) {
 								res.json(throwError());
