@@ -76,6 +76,25 @@ leaderboard.txt will be set up as
 
 */
 
+router.route('/new/:username')
+	.get(function(req, res){
+		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
+  			if (err) {
+  				console.log("Creating file to " + req.params.username);
+  				toWrite = {Stats: [], Challenges : []};
+	  			fs.writeFile(req.params.username + ".txt", JSON.stringify(toWrite), (err) => {
+					if(err) {
+						res.json(throwError());
+						return;
+					}
+				});
+				res.json({message: "Successfully created a new user!", err: null})
+  				return;
+  			} 
+  			res.json({message: "", err: "User Already Exists"});
+  		});
+	});
+
 router.route('/update/:username/:workout/:amount')
 	.get(function(req, res) {
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
