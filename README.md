@@ -19,14 +19,14 @@ Most messages will be responded to with a message stating if they were successfu
 {  
    Stats: [{  
          workout: String,  
-         amount: int  
+         amount: Int  
       },  
    ] 
    
    Challenges: [{  
          opponent: String,  
          workout: String,  
-         amount: int  
+         amount: Int  
       },  
    ]  
 }
@@ -38,7 +38,7 @@ Most messages will be responded to with a message stating if they were successfu
    General: [{
          workout: String, 
          username : String, 
-         amount : int
+         amount : Int
       },
    ],
 
@@ -46,7 +46,7 @@ Most messages will be responded to with a message stating if they were successfu
          workout: String, 
          data: [{
                username: String, 
-               amount: int
+               amount: Int
             },
          ]
       },
