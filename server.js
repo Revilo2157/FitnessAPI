@@ -137,9 +137,9 @@ router.route('/update/:username/:workout/:amount')
 			});
 
   			if(changed) {
-  				res.json{message: "Congrats! You topped the leaderboard!", err: null};
+  				res.json({message: "Congrats! You topped the leaderboard!", err: null});
   			} else {
-				res.json{message: "Updated Successfully", err: null};
+				res.json({message: "Updated Successfully", err: null});
   			}
   		});
 	});
