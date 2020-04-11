@@ -16,34 +16,34 @@ http://152.3.69.115:8081/api/leaderboard
 Most messages will be responded to with a message stating if they were successful or not. The exceptions to this are errors where an empty message is sent as well as information replies. There the JSON will follow this structure:
 ### Stats:
 ```javascript
-   {  
-      Stats: [{  
-            workout: String,  
-            amount: int  
-         },  
-      ]  
-      Challenges: [{  
-            opponent: String,  
-            workout: String,  
-            amount: int  
-         },  
-      ]  
-   }
+{  
+Stats: [{  
+workout: String,  
+amount: int  
+},  
+]  
+Challenges: [{  
+opponent: String,  
+workout: String,  
+amount: int  
+},  
+]  
+}
 ```
 
 ### Leaderboards
 ```javascript
 {
-	General: [ 
-		{workout: String, username : String, amount : Int},
-	],
+General: [ 
+{workout: String, username : String, amount : Int},
+],
 
-	Workouts: [ 
-		{workout: String, data: [
-			{
-				{username: String, amount: Int},
-			}]},
-	]
+Workouts: [ 
+{workout: String, data: [
+{
+{username: String, amount: Int},
+}]},
+]
 }
 ```
    
