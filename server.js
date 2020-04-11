@@ -97,6 +97,7 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 		})
 
 		if(!done) {
+			console.log("Saving Data")
 			challengerData.Challenges.push({opponent: req.params.challenged, 
 											workout: req.params.workout,
 											amount: req.params.amount});
