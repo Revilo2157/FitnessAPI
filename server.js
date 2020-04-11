@@ -282,4 +282,15 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
+fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
+	if (err) {
+		console.log("Creating a new leaderboard");
+		toWrite = {Data: []};
+		fs.writeFile("leaderboard.txt", JSON.stringify(toWrite), (err) => {
+			if(err) {
+				return;
+			}
+		});
+	}
+});
 console.log('Magic happens on port ' + port);
