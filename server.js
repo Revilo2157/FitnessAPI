@@ -72,12 +72,14 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 		var done = false;
 		fs.access(req.params.challenger + ".txt", fs.constants.F_OK, (err) => {
 			console.log("File not found");
-  			done = true;
+  			if (err) done = true;
 		});
+
 		fs.access(req.params.challenged + ".txt", fs.constants.F_OK, (err) => {
 			console.log("File 2 not found");
-  			done = true;
+  			if(err) done = true;
 		});
+		
 		fs.readFile(req.params.challenger + ".txt", "utf-8", (err, data) => {
 			if(err) {
 				res.json({message: "", err:"An Error Occured"});
