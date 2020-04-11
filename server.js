@@ -32,15 +32,17 @@ router.use(function(req, res, next) {
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to the Duke Fitness API!\nUseage:'
-     + '\n/ping'
-     + '\n/new/username'
-     + '\n/challenge/challenger/challenged/workout/amount'
-     + '\n/stats/username'
-     + '\n/update/username/workout/amount'
- 	 + '\n/leaderboard'});
+     	+ '\n/ping'
+     	+ '\n/new/username'
+     	+ '\n/challenge/challenger/challenged/workout/amount'
+     	+ '\n/stats/username'
+    	+ '\n/update/username/workout/amount'
+		+ '\n/leaderboard'});
 });
 // more routes for our API will happen here
 
+// Ping is used to test if the API is on
+// =============================================================================
 router.get('/ping', function(req, res) {
 	res.json({message: 'Online and Ready', err:null});
 });
@@ -64,39 +66,50 @@ username.txt will be set up as follows
 
 leaderboard.txt will be set up as
 {
-	General: [ 
-		{workout: String, username : String, amount : Int},
+	General: [{
+		workout: String, 
+		username : String, 
+		amount : Int},
 	],
 
-	Workouts: [ 
-		{workout: String, data: [
-			{
-				{username: String, amount: Int},
-			}]},
+	Workouts: [{
+		workout: String, 
+		data: [{
+			username: String, 
+			amount: Int
+			},
+		]
 	]
 }
-
 */
+
+// Gets leaderboard 
+// Inputs: None
+// =============================================================================
 router.route('/leaderboard')
 	.get(function(req, res) {
-		fs.access("leaderboard.txt", fs.constants.F_OK, (err) => {
+		fs.access("leaderboard.txt", fs.constants.F_OK, (err) => { // Check if the file exists
   			if (err) {
   				res.json(throwError());
   				return;
   			} 
 
-  			fs.readFile("leaderboard.txt", "utf-8", (err, data) => {
+  			fs.readFile("leaderboard.txt", "utf-8", (err, data) => { // Read the file
 				if(err) {
 					res.json(throwError());
 					return;
 				} 
 
 				var board = JSON.parse(data);
-				res.json({message: board, err: null});
+				res.json({message: board, err: null}); // Return the file
   			});
   		});
 	});
 
+// Creates a new user
+// Inputs: 
+// 		username: The username to create for the user, throws an error if the username is already in use
+// =============================================================================
 router.route('/new/:username')
 	.get(function(req, res){
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
@@ -116,6 +129,12 @@ router.route('/new/:username')
   		});
 	});
 
+// Updates the amount a user has done of a workout, updates the leaderboard as well
+// Inputs: 
+// 		username: The user to update
+// 		workout: Which workout to update
+//		amount: The amount done
+// =============================================================================
 router.route('/update/:username/:workout/:amount')
 	.get(function(req, res) {
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
@@ -235,6 +254,10 @@ router.route('/update/:username/:workout/:amount')
   		});
 	});
 
+// Gets the stats for the user
+// Inputs: 
+// 		username: The user to retrieve the information from
+// =============================================================================
 router.route('/stats/:username')
 	.get(function(req, res) {
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
@@ -256,6 +279,13 @@ router.route('/stats/:username')
   		});
 	});
 
+// Updates the amount a user has done of a workout
+// Inputs: 
+// 		challenger: The user that initiated
+// 		challenged: The user that was challenged
+// 		workout: Which workout to update
+//		amount: The amount done
+// =============================================================================
 router.route('/challenge/:challenger/:challenged/:workout/:amount')
 	.get(function(req,res) {
 		fs.access(req.params.challenger + ".txt", fs.constants.F_OK, (err) => {
@@ -325,6 +355,9 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
+
+// Creates a leaderboard if one didnt exist
+// =============================================================================
 fs.access("leaderboard.txt", fs.constants.F_OK, (err) => {
 	if (err) {
 		console.log("Creating a new leaderboard");
