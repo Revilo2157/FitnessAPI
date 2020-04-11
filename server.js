@@ -275,6 +275,17 @@ router.route('/delete/:username')
   		});
 	});
 
+router.route('/reset')
+	.get(function(req, res) {
+console.log("Creating a new leaderboard");
+		toWrite = {General: [], Workouts: []};
+		fs.writeFile("leaderboard.txt", JSON.stringify(toWrite), (err) => {
+			if(err) {
+				return;
+			}
+		});
+	});
+
 // Gets the stats for the user
 // Inputs: 
 // 		username: The user to retrieve the information from
