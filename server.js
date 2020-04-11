@@ -94,7 +94,7 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 			}
 		})
 
-		if(~done) {
+		if(!done) {
 			challengerData.Challenges.push({opponent: req.params.challenged, 
 											workout: req.params.workout,
 											amount: req.params.amount});
