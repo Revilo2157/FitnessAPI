@@ -1,17 +1,16 @@
 # Duke Fitness App
 Server-side API to establish a leaderboard and send challenges to other users.
 
-## Deploy on Heroku
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
 Deployed at: 
-https://dukefitnessapp.herokuapp.com/
+https://http://152.3.69.115:8081/
 
 ## Usage: 
-https://dukefitnessapp.herokuapp.com/api/leaderboard/workout  
-https://dukefitnessapp.herokuapp.com/api/challenge/username  
-https://dukefitnessapp.herokuapp.com/api/stats/username  
-
+http://152.3.69.115:8081/api/ping
+http://152.3.69.115:8081/api/new/username
+http://152.3.69.115:8081/api/challenge/challenger/challenged/workout/amount
+http://152.3.69.115:8081/api/stats/username
+http://152.3.69.115:8081/api/update/username/workout/amount'
+http://152.3.69.115:8081/api/leaderboard
+   
 ## [DukeFitnessApp](https://github.com/Revilo2157/dukefitnessapp/)
 
