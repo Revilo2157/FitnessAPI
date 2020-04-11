@@ -5,15 +5,15 @@ Deployed at:
 http://152.3.69.115:8081/
 
 ## Usage: 
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;### Ping:
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to test if the API is online.  
+### Ping:
+Used to test if the API is online.  
       
       http://152.3.69.115:8081/api/ping  
       
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;### New:
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to create a new user file on the server.  
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Inputs:**
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Username:* The username to create the file for.
+### New:
+Used to create a new user file on the server.  
+**Inputs:**
+*Username:* The username to create the file for.
    
       http://152.3.69.115:8081/api/new/username   
       http://152.3.69.115:8081/api/challenge/challenger/challenged/workout/amount  
