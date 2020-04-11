@@ -37,10 +37,10 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to the Duke Fitness API!\nUseage:'
      + '\n/ping'
-     + '\n/create/username'
+     + '\n/new/username'
      + '\n/challenge/challenger/challenged/workout/amount'
-     + '\n/stats/get/username'
-     + '\n/stats/update/username/workout/amount'
+     + '\n/stats/username'
+     + '\n/update/username/workout/amount'
  	 + '\n/leaderboard/get/workout'});   
 });
 
@@ -67,39 +67,59 @@ username.txt will be set up as follows
 
 */
 
+router.route('/update/:username/:workout/:amount')
+	.get(function(req, res) {
+		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
+  			if (err) {
+  				console.log(req.params.username + " data not found");
+  				res.json(throwError());
+  				return;
+  			} 
+  			var userData = readFile(req.params.username + ".txt");
+  			if(userData.stats[req.params.workout] == null) {
+  				userData.Stats[req.params.workout] = req.params.amount;
+  			} else {
+  				userData.Stats[req.params.workout] = userData.Stats[req.params.workout] + req.params.amount;
+  			}
+  			fs.writeFile(req.params.username + ".txt", JSON.stringify(userData), (err) =>{
+				if(err) {
+					res.json(throwError());
+					return;
+				}
+			});
+  		});
+	});
 
-function readFile(file) {
-	fs.readFile(file, "utf-8", (err, data) => {
-			if(err) {
-				return null;
-			} else {
-				return JSON.parse(data);
-			}
-	})
-}
-
-function throwError() {
-	return {message: "", error: "An error occured"};
-}
+router.route('/stats/:username')
+	.get(function(req, res) {
+		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
+  			if (err) {
+  				console.log(req.params.username + " data not found");
+  				res.json(throwError());
+  				return;
+  			} 
+  			var userData = readFile(req.params.username + ".txt");
+  			res.json(userData);
+  		});
+	});
 
 router.route('/challenge/:challenger/:challenged/:workout/:amount')
 	.get(function(req,res) {
-		var done = false;
 		fs.access(req.params.challenger + ".txt", fs.constants.F_OK, (err) => {
   			if (err) {
-  				console.log(req.params.challenger + "data not found");
-  				res.json(throwError())
+  				console.log(req.params.challenger + " data not found");
+  				res.json(throwError());
   				return;
   			} 
-  			var challangerData = readFile(req.params.challenger + ".txt");
+
   			fs.access(req.params.challenged + ".txt", fs.constants.F_OK, (err) => {
   				if (err) {
-  					console.log(req.params.challenged + "data not found");
-  					res.json(throwError())
+  					console.log(req.params.challenged + " data not found");
+  					res.json(throwError());
   					return;
   				} 
-  				var challangerData = readFile(req.params.challenger + ".txt");
-  				var challangedData = readFile(req.params.challenged + ".txt");
+  				var challengerData = readFile(req.params.challenger + ".txt");
+  				var challengedData = readFile(req.params.challenged + ".txt");
 				challengerData.Challenges.push({opponent: req.params.challenged, 
 												workout: req.params.workout,
 												amount: req.params.amount});
@@ -123,6 +143,19 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 		});
 	});
 
+function throwError() {
+	return {message: "", error: "An error occured"};
+}
+
+function readFile(file) {
+	fs.readFile(file, "utf-8", (err, data) => {
+			if(err) {
+				return null;
+			} else {
+				return JSON.parse(data);
+			}
+	})
+}
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
