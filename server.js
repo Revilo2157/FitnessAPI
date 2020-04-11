@@ -24,7 +24,6 @@ var router = express.Router();              // get an instance of the express Ro
 router.use(function(req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     // do logging
-    console.log('Something is happening.');
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -46,6 +45,7 @@ router.get('/', function(req, res) {
 // Ping is used to test if the API is on
 // =============================================================================
 router.get('/ping', function(req, res) {
+	console.log("Pinging");
 	res.json({message: 'Online and Ready', err:null});
 });
 
@@ -90,6 +90,7 @@ leaderboard.txt will be set up as
 // =============================================================================
 router.route('/leaderboard')
 	.get(function(req, res) {
+		console.log("Getting leaderboard");
 		fs.access("leaderboard.txt", fs.constants.F_OK, (err) => { // Check if the file exists
   			if (err) {
   				res.json(throwError());
@@ -114,9 +115,9 @@ router.route('/leaderboard')
 // =============================================================================
 router.route('/new/:username')
 	.get(function(req, res){
+		console.log("Creating new user " + req.params.username);
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
   			if (err) {
-  				console.log("Creating file for " + req.params.username);
   				toWrite = {Stats: [], Challenges: []};
 	  			fs.writeFile(req.params.username + ".txt", JSON.stringify(toWrite), (err) => {
 					if(err) {
@@ -139,6 +140,7 @@ router.route('/new/:username')
 // =============================================================================
 router.route('/update/:username/:workout/:amount')
 	.get(function(req, res) {
+		console.log("Updating user " + req.params.username + "'s " + req.params.workout + " by " + req.params.amount);
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
   			if (err) {
   				console.log(req.params.username + " data not found");
@@ -258,6 +260,7 @@ router.route('/update/:username/:workout/:amount')
 
 router.route('/delete/:username')
 	.get(function(req, res) {
+		console.log("Deleting user " + req.params.username);
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
   			if (err) {
   				console.log(req.params.username + " data not found");
@@ -278,7 +281,7 @@ router.route('/delete/:username')
 
 router.route('/reset')
 	.get(function(req, res) {
-console.log("Creating a new leaderboard");
+		console.log("Creating a new leaderboard");
 		toWrite = {General: [], Workouts: []};
 		fs.writeFile("leaderboard.txt", JSON.stringify(toWrite), (err) => {
 			if(err) {
@@ -295,6 +298,7 @@ console.log("Creating a new leaderboard");
 // =============================================================================
 router.route('/stats/:username')
 	.get(function(req, res) {
+		console.log("Retrieving stats for " + req.params.username);
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
   			if (err) {
   				console.log(req.params.username + " data not found");
@@ -323,6 +327,7 @@ router.route('/stats/:username')
 // =============================================================================
 router.route('/challenge/:challenger/:challenged/:workout/:amount')
 	.get(function(req,res) {
+		console.log(req.params.challenger + " is challenging " + req.params.challenged + " to do " + req.params.amount + " " + req.params.workout + "s");
 		fs.access(req.params.challenger + ".txt", fs.constants.F_OK, (err) => {
   			if (err) {
   				console.log(req.params.challenger + " data not found");
