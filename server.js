@@ -82,6 +82,7 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 			if(err) {
 				res.json({message: "", err:"An Error Occured"});
 				done = true;
+				console.log("Read Error");
 			} else {
 				var challengerData = JSON.parse(data);
 			}
@@ -91,6 +92,7 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 			if(err) {
 				res.json({message: "", err:"An Error Occured"});
 				done = true;
+				console.log("Read Error");
 			} else {
 				var challengedData = JSON.parse(data);
 			}
