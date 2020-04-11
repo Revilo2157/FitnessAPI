@@ -271,6 +271,7 @@ router.route('/delete/:username')
   					res.json(throwError());
   					return
   				}
+  				res.json({message: "Successfully deleted " + req.params.username, err: null});
   			});
   		});
 	});
@@ -281,8 +282,10 @@ console.log("Creating a new leaderboard");
 		toWrite = {General: [], Workouts: []};
 		fs.writeFile("leaderboard.txt", JSON.stringify(toWrite), (err) => {
 			if(err) {
+				res.json(throwError());
 				return;
 			}
+			res.json({message: "Successfully reset the leaderboard!", err: null});
 		});
 	});
 
