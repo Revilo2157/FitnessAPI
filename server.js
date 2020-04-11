@@ -71,6 +71,25 @@ leaderboard.txt will be set up as
 }
 
 */
+router.route('/leaderboard')
+	.get(function(req, res) {
+		fs.access("leaderboard.txt", fs.constants.F_OK, (err) => {
+  			if (err) {
+  				res.json(throwError());
+  				return;
+  			} 
+
+  			fs.readFile("leaderboard.txt", "utf-8", (err, data) => {
+				if(err) {
+					res.json(throwError());
+					return;
+				} 
+
+				var board = JSON.parse(data);
+				res.json(board);
+  			});
+  		});
+	});
 
 router.route('/new/:username')
 	.get(function(req, res){
@@ -99,64 +118,77 @@ router.route('/update/:username/:workout/:amount')
   				res.json(throwError());
   				return;
   			} 
-  			var userData = readFile(req.params.username + ".txt");
-  			console.log(userData);
-  			var found = false;
-  			var newAmount = parseInt(req.params.amount);
-  			for(let i = 0; i < userData.Stats.length; i++) {
-  				if(userData.Stats[i].workout.localeCompare(req.params.workout) == 0) {
-  					userData.Stats[i].amount = userData.Stats[i].amount + parseInt(req.params.amount);
-  					newAmount = userData.Stats[i].amount
-  					found = true;
-  					break;
-  				}
-  			}
-  			
-  			if(!found) {
-  				userData.Stats.push({workout: req.params.workout, amount: parseInt(req.params.amount)});
-  			}
 
-  			var leaderboard = readFile("leaderboard.txt");
-
-  			var changed = false;
-  			for(let i = 0; i < leaderboard.Data.length; i++) {
-  				if(leaderboard.Data[i].workout.localeCompare(req.params.workout) == 0) {
-  					found = true;
-  					if(leaderboard.Data[i].amount < newAmount) {
-  						changed = true;
-  						leaderboard.Data[i].amount = newAmount;
-  						leaderboard.Data[i].username = req.params.username;
-  					}
-  					break;
-  				}
-  			}
-
-  			if(!found) {
-  				changed = true;
-  				leaderboard.Data.push({workout: reqs.params.workout, username : reqs.params.username, amount : newAmount});
-  			}
-
-  			if(changed) {
-  				fs.writeFile("leaderboard.txt", JSON.stringify(leaderboard), (err) => {
-					if(err) {
-						res.json(throwError());
-						return;
-					}
-				});
-  			}
-
-  			fs.writeFile(req.params.username + ".txt", JSON.stringify(userData), (err) =>{
+  			fs.readFile(req.params.username + ".txt", "utf-8", (err, data) => {
 				if(err) {
 					res.json(throwError());
 					return;
-				}
-			});
+				} 
 
-  			if(changed) {
-  				res.json({message: "Congrats! You topped the leaderboard!", err: null});
-  			} else {
-				res.json({message: "Updated Successfully", err: null});
-  			}
+				var userData = JSON.parse(data);
+	  			var found = false;
+	  			var newAmount = parseInt(req.params.amount);
+	  			for(let i = 0; i < userData.Stats.length; i++) {
+	  				if(userData.Stats[i].workout.localeCompare(req.params.workout) == 0) {
+	  					userData.Stats[i].amount = userData.Stats[i].amount + parseInt(req.params.amount);
+	  					newAmount = userData.Stats[i].amount
+	  					found = true;
+	  					break;
+	  				}
+	  			}
+	  			
+	  			if(!found) {
+	  				userData.Stats.push({workout: req.params.workout, amount: parseInt(req.params.amount)});
+	  			}
+
+				fs.readFile("leaderboard.txt", "utf-8", (err, data) => {
+					if(err) {
+						res.json(throwError());
+						return;
+					} 
+
+					var leaderboard = JSON.parse(data);
+		  			var changed = false;
+		  			for(let i = 0; i < leaderboard.Data.length; i++) {
+		  				if(leaderboard.Data[i].workout.localeCompare(req.params.workout) == 0) {
+		  					found = true;
+		  					if(leaderboard.Data[i].amount < newAmount) {
+		  						changed = true;
+		  						leaderboard.Data[i].amount = newAmount;
+		  						leaderboard.Data[i].username = req.params.username;
+		  					}
+		  					break;
+		  				}
+		  			}
+
+		  			if(!found) {
+		  				changed = true;
+		  				leaderboard.Data.push({workout: req.params.workout, username : req.params.username, amount : newAmount});
+		  			}
+
+		  			if(changed) {
+		  				fs.writeFile("leaderboard.txt", JSON.stringify(leaderboard), (err) => {
+							if(err) {
+								res.json(throwError());
+								return;
+							}
+						});
+		  			}
+
+		  			fs.writeFile(req.params.username + ".txt", JSON.stringify(userData), (err) =>{
+						if(err) {
+							res.json(throwError());
+							return;
+						}
+					});
+
+		  			if(changed) {
+		  				res.json({message: "Congrats! You topped the leaderboard!", err: null});
+		  			} else {
+						res.json({message: "Updated Successfully", err: null});
+		  			}
+				});
+			});
   		});
 	});
 
@@ -168,8 +200,16 @@ router.route('/stats/:username')
   				res.json(throwError());
   				return;
   			} 
-  			var userData = readFile(req.params.username + ".txt");
-  			res.json(userData);
+
+  			fs.readFile(req.params.username + ".txt", "utf-8", (err, data) => {
+				if(err) {
+					res.json(throwError());
+					return;
+				} 
+
+				var userData = JSON.parse(data);
+				res.json(userData);
+  			});
   		});
 	});
 
@@ -188,27 +228,44 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
   					res.json(throwError());
   					return;
   				} 
-  				var challengerData = readFile(req.params.challenger + ".txt");
-  				var challengedData = readFile(req.params.challenged + ".txt");
-				challengerData.Challenges.push({opponent: req.params.challenged, 
-												workout: req.params.workout,
-												amount: req.params.amount});
-				challengedData.Challenges.push({opponent: req.params.challenger, 
-												workout: req.params.workout,
-												amount: req.params.amount});
-				fs.writeFile(req.params.challenger + ".txt", JSON.stringify(challengerData), (err) =>{
+
+  				fs.readFile(req.params.challenger + ".txt", "utf-8", (err, data) => {
 					if(err) {
 						res.json(throwError());
 						return;
 					}
-				});
-				fs.writeFile(req.params.challenged + ".txt", JSON.stringify(challengedData), (err) =>{
-					if(err) {
-						res.json(throwError());
-						return;
-					}				
-				});
-				res.json({message: "Challenge sent", err:null});
+
+					var challengerData = JSON.parse(data);
+	  				
+	  				fs.readFile(req.params.challenged + ".txt", "utf-8", (err, data) => {
+						if(err) {
+							res.json(throwError());
+							return;
+						} 
+
+						var challengedData = JSON.parse(data);
+
+						challengerData.Challenges.push({opponent: req.params.challenged, 
+														workout: req.params.workout,
+														amount: req.params.amount});
+						challengedData.Challenges.push({opponent: req.params.challenger, 
+														workout: req.params.workout,
+														amount: req.params.amount});
+						fs.writeFile(req.params.challenger + ".txt", JSON.stringify(challengerData), (err) =>{
+							if(err) {
+								res.json(throwError());
+								return;
+							}
+						});
+						fs.writeFile(req.params.challenged + ".txt", JSON.stringify(challengedData), (err) =>{
+							if(err) {
+								res.json(throwError());
+								return;
+							}				
+						});
+						res.json({message: "Challenge sent", err:null});
+					});
+	  			});
 			});
 		});
 	});
@@ -217,16 +274,6 @@ function throwError() {
 	return {message: "", error: "An error occured"};
 }
 
-function readFile(file) {
-	fs.readFile(file, "utf-8", (err, data) => {
-			if(err) {
-				return null;
-			} else {
-				console.log("Reading: " + data);
-				return JSON.parse(data);
-			}
-	})
-}
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
