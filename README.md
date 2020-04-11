@@ -27,33 +27,24 @@ Creates a challenge between two different users. Throws an exception if either u
       
       http://152.3.69.115:8081/api/challenge/challenger/challenged/workout/amount  
       
-### Challenge:
-Creates a challenge between two different users. Throws an exception if either user does not exist in the server.  
+### Stats:
+Returns the user's information file. Throws an exception if the user does not exist in the server.  
 **Inputs:**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged.   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done.   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Username:* The user whose data is to be returned.           
 
       http://152.3.69.115:8081/api/stats/username  
       
-### Challenge:
-Creates a challenge between two different users. Throws an exception if either user does not exist in the server.  
+### Update:
+Updates the user's information to include newly done workouts. Throws an exception if the user does not exist in the server.  
 **Inputs:**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.        
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged.   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Username:* The user to update.        
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout to update.   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout.   
 
       http://152.3.69.115:8081/api/update/username/workout/amount 
       
-### Challenge:
-Creates a challenge between two different users. Throws an exception if either user does not exist in the server.  
-**Inputs:**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.      
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged.   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done.   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout.   
+### Leaderboard:
+Returns the leaderboard.
 
       http://152.3.69.115:8081/api/leaderboard  
    
