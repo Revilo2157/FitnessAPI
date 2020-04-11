@@ -6,11 +6,6 @@
 // call the packages we need
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
-var bodyParser = require('body-parser');
-var request    = require('request');
-var cheerio    = require('cheerio');
-var _          = require('underscore');
-var unirest    = require("unirest");
 var fs 		   = require("fs")
 
 // configure app to use bodyParser()
@@ -80,8 +75,8 @@ router.route('/new/:username')
 	.get(function(req, res){
 		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
   			if (err) {
-  				console.log("Creating file to " + req.params.username);
-  				toWrite = {Stats: [], Challenges : []};
+  				console.log("Creating file for " + req.params.username);
+  				toWrite = {Stats: [], Challenges: []};
 	  			fs.writeFile(req.params.username + ".txt", JSON.stringify(toWrite), (err) => {
 					if(err) {
 						res.json(throwError());
