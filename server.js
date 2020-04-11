@@ -67,28 +67,69 @@ username.txt will be set up as follows
 
 */
 
+
+function readFile(file) {
+	fs.readFile(file, "utf-8", (err, data) => {
+			if(err) {
+				return null;
+			} else {
+				return JSON.parse(data);
+			}
+	})
+}
+
+function throwError() {
+	return {message: "", error: "An error occured"};
+}
+
 router.route('/challenge/:challenger/:challenged/:workout/:amount')
 	.get(function(req,res) {
 		var done = false;
 		fs.access(req.params.challenger + ".txt", fs.constants.F_OK, (err) => {
 			console.log("File not found");
-  			if (err) done = true;
+  			if (err) {
+  				res.json(throwError())
+  				return;
+  			} 
+  			var challangerData = readFile(req.params.challenger + ".txt");
+  			fs.access(req.params.challenged + ".txt", fs.constants.F_OK, (err) => {
+  				if (err) {
+  					res.json(throwError())
+  					return;
+  				} 
+  				var challangedData = readFile(req.params.challenger + ".txt");
+
+  				console.log("Saving Data")
+				challengerData.Challenges.push({opponent: req.params.challenged, 
+												workout: req.params.workout,
+												amount: req.params.amount});
+				challengedData.Challenges.push({opponent: req.params.challenger, 
+												workout: req.params.workout,
+												amount: req.params.amount});
+				fs.writeFile(req.params.challenger + ".txt", JSON.stringify(challengerData), (err) =>{
+					if(err) {
+						res.json(throwError());
+						return;
+					}
+				});
+				fs.writeFile(req.params.challenged + ".txt", JSON.stringify(challengedData), (err) =>{
+					if(err) {
+						res.json(throwError());
+						return;
+					}				
+				});
+				res.json({message: "Challenge sent", err:null});
+			});
 		});
 
 		fs.access(req.params.challenged + ".txt", fs.constants.F_OK, (err) => {
 			console.log("File 2 not found");
   			if(err) done = true;
+
+
 		});
+
 		
-		fs.readFile(req.params.challenger + ".txt", "utf-8", (err, data) => {
-			if(err) {
-				res.json({message: "", err:"An Error Occured"});
-				done = true;
-				console.log("Read Error");
-			} else {
-				var challengerData = JSON.parse(data);
-			}
-		})
 
 		fs.readFile(req.params.challenged + ".txt", "utf-8", (err, data) => {
 			if(err) {
@@ -101,21 +142,7 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 		})
 
 		if(!done) {
-			console.log("Saving Data")
-			challengerData.Challenges.push({opponent: req.params.challenged, 
-											workout: req.params.workout,
-											amount: req.params.amount});
-			challengedData.Challenges.push({opponent: req.params.challenger, 
-											workout: req.params.workout,
-											amount: req.params.amount});
-			fs.writeFile(req.params.challenger + ".txt", JSON.stringify(challengerData), (err) =>{
-				if(err) throw err;
-			});
-			fs.writeFile(req.params.challenged + ".txt", JSON.stringify(challengedData), (err) =>{
-				if(err) throw err;
-			});
-
-			res.json({message: "Challenge sent", err:null});
+			
 		}
 	});
 
