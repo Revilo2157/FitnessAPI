@@ -17,33 +17,40 @@ Most messages will be responded to with a message stating if they were successfu
 ### Stats:
 ```javascript
 {  
-Stats: [{  
-workout: String,  
-amount: int  
-},  
-]  
-Challenges: [{  
-opponent: String,  
-workout: String,  
-amount: int  
-},  
-]  
+   Stats: [{  
+         workout: String,  
+         amount: int  
+      },  
+   ] 
+   
+   Challenges: [{  
+         opponent: String,  
+         workout: String,  
+         amount: int  
+      },  
+   ]  
 }
 ```
 
 ### Leaderboards
 ```javascript
 {
-General: [ 
-{workout: String, username : String, amount : Int},
-],
+   General: [{
+         workout: String, 
+         username : String, 
+         amount : int
+      },
+   ],
 
-Workouts: [ 
-{workout: String, data: [
-{
-{username: String, amount: Int},
-}]},
-]
+   Workouts: [{
+         workout: String, 
+         data: [{
+               username: String, 
+               amount: int
+            },
+         ]
+      },
+   ]
 }
 ```
    
