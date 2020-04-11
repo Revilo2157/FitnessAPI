@@ -70,9 +70,15 @@ username.txt will be set up as follows
 router.route('/challenge/:challenger/:challenged/:workout/:amount')
 	.get(function(req,res) {
 		var done = false;
+		fs.access(req.params.challenger + ".txt", fs.constants.F_OK, (err) => {
+  			done = true
+		});
+		fs.access(req.params.challenged + ".txt", fs.constants.F_OK, (err) => {
+  			done = true
+		});
 		fs.readFile(req.params.challenger + ".txt", "utf-8", (err, data) => {
 			if(err) {
-				res.json({message: "", err:"Challenger user does not exist"});
+				res.json({message: "", err:"An Error Occured"});
 				done = true;
 			} else {
 				var challengerData = JSON.parse(data);
@@ -81,12 +87,13 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 
 		fs.readFile(req.params.challenged + ".txt", "utf-8", (err, data) => {
 			if(err) {
-				res.json({message: "", err:"Challenged user does not exist"});
+				res.json({message: "", err:"An Error Occured"});
 				done = true;
 			} else {
 				var challengedData = JSON.parse(data);
 			}
 		})
+
 		if(~done) {
 			challengerData.Challenges.push({opponent: req.params.challenged, 
 											workout: req.params.workout,
@@ -100,7 +107,7 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 			fs.writeFile(req.params.challenged + ".txt", JSON.stringify(challengedData), (err) =>{
 				if(err) throw err;
 			});
-			
+
 			res.json({message: "Challenge sent", err:null});
 		}
 	});

@@ -7,7 +7,6 @@
     "express": "~4.0.0",
     "request": "^2.60.0",
     "underscore": "^1.8.3",
-    "unirest": "^0.6.0",
-    "redis": "^3.0.2"
+    "unirest": "^0.6.0"
   }
 }
