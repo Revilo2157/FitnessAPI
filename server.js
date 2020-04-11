@@ -92,7 +92,7 @@ router.route('/leaderboard')
 				} 
 
 				var board = JSON.parse(data);
-				res.json(board);
+				res.json({message: board, err: null});
   			});
   		});
 	});
@@ -251,7 +251,7 @@ router.route('/stats/:username')
 				} 
 
 				var userData = JSON.parse(data);
-				res.json(userData);
+				res.json({message: userData, err: null);
   			});
   		});
 	});
