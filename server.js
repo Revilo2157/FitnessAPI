@@ -98,8 +98,6 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
   					return;
   				} 
   				var challangedData = readFile(req.params.challenger + ".txt");
-
-  				console.log("Saving Data")
 				challengerData.Challenges.push({opponent: req.params.challenged, 
 												workout: req.params.workout,
 												amount: req.params.amount});
@@ -121,29 +119,6 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 				res.json({message: "Challenge sent", err:null});
 			});
 		});
-
-		fs.access(req.params.challenged + ".txt", fs.constants.F_OK, (err) => {
-			console.log("File 2 not found");
-  			if(err) done = true;
-
-
-		});
-
-		
-
-		fs.readFile(req.params.challenged + ".txt", "utf-8", (err, data) => {
-			if(err) {
-				res.json({message: "", err:"An Error Occured"});
-				done = true;
-				console.log("Read Error");
-			} else {
-				var challengedData = JSON.parse(data);
-			}
-		})
-
-		if(!done) {
-			
-		}
 	});
 
 
