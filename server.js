@@ -37,7 +37,9 @@ router.get('/', function(req, res) {
      	+ '\n/challenge/challenger/challenged/workout/amount'
      	+ '\n/stats/username'
     	+ '\n/update/username/workout/amount'
-		+ '\n/leaderboard'});
+		+ '\n/leaderboard'
+		+ '\n/delete/username'
+	});
 });
 // more routes for our API will happen here
 
@@ -163,7 +165,7 @@ router.route('/update/:username/:workout/:amount')
 	  			}
 	  			
 	  			if(!found) {
-	  				userData.Stats.push({workout: req.params.workout, amount: parseInt(req.params.amount)});
+	  				userData.Stats.push({workout: req.params.workout, amount: newAmount});
 	  			}
 
 				fs.readFile("leaderboard.txt", "utf-8", (err, data) => {
@@ -252,6 +254,24 @@ router.route('/update/:username/:workout/:amount')
 				});
 			});
   		});
+	});
+
+router.route('/delete/:username')
+	.get(function(req, res) {
+		fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
+  			if (err) {
+  				console.log(req.params.username + " data not found");
+  				res.json(throwError());
+  				return;
+  			} 
+
+  			fs.unlink(req.params.username + ".txt", (err) => {
+  				if(err) {
+  					console.log("Failed to delete");
+  					res.json(throwError());
+  					return
+  				}
+  			});
 	});
 
 // Gets the stats for the user
