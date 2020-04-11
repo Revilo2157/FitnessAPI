@@ -41,7 +41,7 @@ router.get('/', function(req, res) {
      + '\n/challenge/challenger/challenged/workout/amount'
      + '\n/stats/username'
      + '\n/update/username/workout/amount'
- 	 + '\n/leaderboard/get/workout'});   
+ 	 + '\n/leaderboard'});   
 });
 
 // more routes for our API will happen here
@@ -54,14 +54,23 @@ router.get('/ping', function(req, res) {
 /*
 username.txt will be set up as follows
 {
-	Stats : { 	Meant to be growable
-		workout : amount
-	}
+	Stats : [ { 
+			name : String,
+			amount : Int
+		}
+	], 
 	Challenges : [ {
 			opponent : String,
 			workout : String,
-			amount : String,
+			amount : Int,
 		}
+	]
+}
+
+leaderboard.txt will be set up as
+{
+	Data: [ 
+		{workout: String, username : String, amount : Int},
 	]
 }
 
@@ -76,17 +85,62 @@ router.route('/update/:username/:workout/:amount')
   				return;
   			} 
   			var userData = readFile(req.params.username + ".txt");
-  			if(userData.stats[req.params.workout] == null) {
-  				userData.Stats[req.params.workout] = req.params.amount;
-  			} else {
-  				userData.Stats[req.params.workout] = userData.Stats[req.params.workout] + req.params.amount;
+  			var found = false;
+  			var newAmount = parseInt(req.params.amount);
+  			for(let i = 0; i < userData.Stats.length; i++) {
+  				if(userData.Stats[i].workout.localeCompare(req.params.workout) == 0) {
+  					userData.Stats[i].amount = userData.Stats[i].amount + parseInt(req.params.amount);
+  					newAmount = userData.Stats[i].amount
+  					found = true;
+  					break;
+  				}
   			}
+  			
+  			if(!found) {
+  				userData.Stats.push({workout: req.params.workout, amount: parseInt(req.params.amount)});
+  			}
+
+  			var leaderboard = readFile("leaderboard.txt");
+
+  			var changed = false;
+  			for(let i = 0; i < leaderboard.Data.length; i++) {
+  				if(leaderboard.Data[i].workout.localeCompare(req.params.workout) == 0) {
+  					found = true;
+  					if(leaderboard.Data[i].amount < newAmount) {
+  						changed = true;
+  						leaderboard.Data[i].amount = newAmount;
+  						leaderboard.Data[i].username = req.params.username;
+  					}
+  					break;
+  				}
+  			}
+
+  			if(!found) {
+  				changed = true;
+  				leaderboard.Data.push({workout: reqs.params.workout, username : reqs.params.username, amount : newAmount});
+  			}
+
+  			if(changed) {
+  				fs.writeFile("leaderboard.txt", JSON.stringify(leaderboard), (err) => {
+					if(err) {
+						res.json(throwError());
+						return;
+					}
+				});
+  			}
+
   			fs.writeFile(req.params.username + ".txt", JSON.stringify(userData), (err) =>{
 				if(err) {
 					res.json(throwError());
 					return;
 				}
 			});
+
+  			if(changed) {
+  				res.json{message: "Congrats! You topped the leaderboard!", err: null};
+  			} else {
+				res.json{message: "Updated Successfully", err: null};
+  			}
   		});
 	});
 
