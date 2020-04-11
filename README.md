@@ -30,6 +30,22 @@ Most messages will be responded to with a message stating if they were successfu
       ]  
    }
 ```
+
+### Leaderboards
+```javascript
+{
+	General: [ 
+		{workout: String, username : String, amount : Int},
+	],
+
+	Workouts: [ 
+		{workout: String, data: [
+			{
+				{username: String, amount: Int},
+			}]},
+	]
+}
+```
    
 ## [DukeFitnessApp](https://github.com/Revilo2157/dukefitnessapp/)
 
