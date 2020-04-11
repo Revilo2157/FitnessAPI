@@ -100,6 +100,7 @@ router.route('/update/:username/:workout/:amount')
   				return;
   			} 
   			var userData = readFile(req.params.username + ".txt");
+  			console.log(userData);
   			var found = false;
   			var newAmount = parseInt(req.params.amount);
   			for(let i = 0; i < userData.Stats.length; i++) {
