@@ -1,8 +1,8 @@
-# Duke Fitness App
+# Duke Fitness App API
 Server-side API to establish a leaderboard and send challenges to other users.
 
 Deployed at: 
-https://http://152.3.69.115:8081/
+http://152.3.69.115:8081/
 
 ## Usage: 
 http://152.3.69.115:8081/api/ping  
@@ -53,6 +53,3 @@ Most messages will be responded to with a message stating if they were successfu
    ]
 }
 ```
-   
-## [DukeFitnessApp](https://github.com/Revilo2157/dukefitnessapp/)
-
