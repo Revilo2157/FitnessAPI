@@ -282,7 +282,7 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-fs.access(req.params.username + ".txt", fs.constants.F_OK, (err) => {
+fs.access("leaderboard.txt", fs.constants.F_OK, (err) => {
 	if (err) {
 		console.log("Creating a new leaderboard");
 		toWrite = {Data: []};
