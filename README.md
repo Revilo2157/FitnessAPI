@@ -21,39 +21,39 @@ Creates a new user file on the server. Throws an exception if the user already e
 Creates a challenge between two different users. Throws an exception if either user does not exist in the server.  
 **Inputs:**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.      
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout.   
       
       http://152.3.69.115:8081/api/challenge/challenger/challenged/workout/amount  
       
 ### Challenge:
 Creates a challenge between two different users. Throws an exception if either user does not exist in the server.  
 **Inputs:**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.      
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.        
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout.   
 
       http://152.3.69.115:8081/api/stats/username  
       
-      ### Challenge:
+### Challenge:
 Creates a challenge between two different users. Throws an exception if either user does not exist in the server.  
 **Inputs:**  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.      
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.        
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout.   
 
       http://152.3.69.115:8081/api/update/username/workout/amount 
       
-      ### Challenge:
+### Challenge:
 Creates a challenge between two different users. Throws an exception if either user does not exist in the server.  
 **Inputs:**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenger:* The user that initiated the challenge.      
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done. 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Challenged:* The user that was challenged.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Workout:* Which workout is to be done.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Amount:* How many reps of the above workout.   
 
       http://152.3.69.115:8081/api/leaderboard  
    
