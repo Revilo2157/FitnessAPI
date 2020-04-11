@@ -272,6 +272,7 @@ router.route('/delete/:username')
   					return
   				}
   			});
+  		});
 	});
 
 // Gets the stats for the user
