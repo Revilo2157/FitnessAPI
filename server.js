@@ -86,18 +86,20 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 	.get(function(req,res) {
 		var done = false;
 		fs.access(req.params.challenger + ".txt", fs.constants.F_OK, (err) => {
-			console.log("File not found");
   			if (err) {
+  				console.log(req.params.challenger + "data not found");
   				res.json(throwError())
   				return;
   			} 
   			var challangerData = readFile(req.params.challenger + ".txt");
   			fs.access(req.params.challenged + ".txt", fs.constants.F_OK, (err) => {
   				if (err) {
+  					console.log(req.params.challenged + "data not found");
   					res.json(throwError())
   					return;
   				} 
-  				var challangedData = readFile(req.params.challenger + ".txt");
+  				var challangerData = readFile(req.params.challenger + ".txt");
+  				var challangedData = readFile(req.params.challenged + ".txt");
 				challengerData.Challenges.push({opponent: req.params.challenged, 
 												workout: req.params.workout,
 												amount: req.params.amount});
