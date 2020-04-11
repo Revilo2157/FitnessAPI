@@ -222,6 +222,7 @@ function readFile(file) {
 			if(err) {
 				return null;
 			} else {
+				console.log("Reading: " + data);
 				return JSON.parse(data);
 			}
 	})
