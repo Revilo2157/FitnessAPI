@@ -274,7 +274,7 @@ router.route('/stats/:username')
 				} 
 
 				var userData = JSON.parse(data);
-				res.json({message: userData, err: null);
+				res.json({message: userData, err: null});
   			});
   		});
 	});
