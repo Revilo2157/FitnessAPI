@@ -6,9 +6,9 @@ http://152.3.69.115:8081/
 
 ## Usage: 
    ### Ping:
-      #### Call:
       http://152.3.69.115:8081/api/ping  
-      Used to test if the API is online
+      
+   Used to test if the API is online
 
 http://152.3.69.115:8081/api/new/username   
 http://152.3.69.115:8081/api/challenge/challenger/challenged/workout/amount  
