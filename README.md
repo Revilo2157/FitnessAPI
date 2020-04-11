@@ -12,8 +12,9 @@ http://152.3.69.115:8081/
       
    ### New:
    Used to create a new user file on the server.
-   #### Inputs:
-   **Username:** The username to create the file for.
+   ** Inputs:**
+   *Username:* The username to create the file for.
+   
       http://152.3.69.115:8081/api/new/username   
       http://152.3.69.115:8081/api/challenge/challenger/challenged/workout/amount  
       http://152.3.69.115:8081/api/stats/username  
