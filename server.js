@@ -64,7 +64,8 @@ username.txt will be set up as follows
 			amount : Int,
 			you : Int,
 			them : Int,
-			completed : Bool
+			completed : Bool,
+			first: String
 		}
 	]
 }
@@ -254,6 +255,8 @@ router.route('/update/:username/:workout/:amount')
 								userData.Challenges[i].you = userData.Challenges[i].amount;
 								if(userData.Challenges[i].them == userData.Challenges[i].amount) {
 									userData.Challenges[i].completed = true;
+								} else {
+									userData.Challenges[i].first = req.params.username;
 								}
 							} else {
 								userData.Challenges[i].you = userData.Challenges[i].you + toAdd;
@@ -317,13 +320,17 @@ function updateOpponent(toUpdate, fromWho, workout, amount) {
 				if(userData.Challenges[i].completed)
 					continue;
 				if(userData.Challenges[i].workout.localeCompare(workout) == 0) {
-					if(userData.Challenges[i].them + amount >= userData.Challenges[i].amount) {
-						userData.Challenges[i].them = userData.Challenges[i].amount;
-						if(userData.Challenges[i].you == userData.Challenges[i].amount) {
-							userData.Challenges[i].completed = true;
-						}
-					} else {
-						userData.Challenges[i].them = userData.Challenges[i].them + amount;
+					if(userData.Challenges[i].opponent.localeCompare(fromWho) == 0) {
+						if(userData.Challenges[i].them + amount >= userData.Challenges[i].amount) {
+							userData.Challenges[i].them = userData.Challenges[i].amount;
+							if(userData.Challenges[i].you == userData.Challenges[i].amount) {
+								userData.Challenges[i].completed = true;
+							} else {
+								userData.Challenges[i].first = fromWho;
+							}
+						} else {
+							userData.Challenges[i].them = userData.Challenges[i].them + amount;
+						} 
 					}
 				}
 			}
