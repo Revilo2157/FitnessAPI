@@ -447,13 +447,13 @@ router.route('/challenge/:challenger/:challenged/:workout/:amount')
 
 						challengerData.Challenges.push({opponent: req.params.challenged, 
 														workout: req.params.workout,
-														amount: req.params.amount,
+														amount: parseInt(req.params.amount),
 														you: 0,
 														them: 0,
 														completed: false});
 						challengedData.Challenges.push({opponent: req.params.challenger, 
 														workout: req.params.workout,
-														amount: req.params.amount,
+														amount: parseInt(req.params.amount),
 														you: 0,
 														them: 0,
 														completed: false});
