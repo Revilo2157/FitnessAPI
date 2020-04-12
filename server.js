@@ -173,6 +173,9 @@ router.route('/update/:username/:workout/:amount')
 	  				userData.Stats.push({workout: req.params.workout, amount: newAmount});
 	  			}
 
+	  			// Editing the leaderboard
+				// =============================================================================
+
 				fs.readFile("leaderboard.txt", "utf-8", (err, data) => {
 					if(err) {
 						res.json(throwError());
@@ -237,6 +240,37 @@ router.route('/update/:username/:workout/:amount')
 		  				leaderboard.Workouts.push({workout: req.params.workout, Data: [{username: req.params.username, amount: newAmount}]});
 		  			}
 
+	  				// Editing the Challenges
+					// =============================================================================
+					var opponents = [];
+					for(let i = 0; i < userData.Challenges.length; i++) {
+						found = false;
+						if(userData.Challenges[i].completed)
+							continue;
+						if(userData.Challenges[i].workout.localeCompare(req.params.workout) == 0) {
+							if(userData.Challenges[i].you + req.params.amount >= userData.Challenges[i].amount) {
+								userData.Challenges[i].you = userData.Challenges[i].amount;
+								if(userData.Challenges[i].them == userData.Challenges[i].amount) {
+									userData.Challenges[i].completed = true;
+								}
+							} else {
+								userData.Challenges[i].you = userData.Challenges[i].you + req.params.amount;
+							}
+
+							opponent = userData.Challenges[i].opponent;
+							for(let j = 0; j < opponents.length; j++) {
+								if(opponents[j].localeCompare(opponent) == 0) {
+									found = true;
+									break;
+								}
+							}
+							if(!found) {
+								updateOpponent(opponent, req.params.username, req.params.workout, req.params.amount);
+							}
+
+						}
+					}
+
 	  				fs.writeFile("leaderboard.txt", JSON.stringify(leaderboard), (err) => {
 						if(err) {
 							res.json(throwError());
@@ -260,6 +294,47 @@ router.route('/update/:username/:workout/:amount')
 			});
   		});
 	});
+
+function updateOpponent(toUpdate, fromWho, workout, amount) {
+	fs.access(toUpdate + ".txt", fs.constants.F_OK, (err) => {
+		if (err) {
+			console.log(toUpdate + " data not found");
+			return;
+		} 
+
+		fs.readFile(toUpdate + ".txt", "utf-8", (err, data) => {
+			if(err) {
+				console.log("An error occurred");
+				return;
+			} 
+
+			var userData = JSON.parse(data);
+			// Editing the Challenges
+					// =============================================================================
+			for(let i = 0; i < userData.Challenges.length; i++) {
+				if(userData.Challenges[i].completed)
+					continue;
+				if(userData.Challenges[i].workout.localeCompare(workout) == 0) {
+					if(userData.Challenges[i].them + amount >= userData.Challenges[i].amount) {
+						userData.Challenges[i].them = userData.Challenges[i].amount;
+						if(userData.Challenges[i].you == userData.Challenges[i].amount) {
+							userData.Challenges[i].completed = true;
+						}
+					} else {
+						userData.Challenges[i].them = userData.Challenges[i].them + amount;
+					}
+				}
+			}
+
+			fs.writeFile(toUpdate + ".txt", JSON.stringify(userData), (err) => {
+				if(err) {
+					res.json(throwError());
+					return;
+				}
+			});
+		});
+  	});
+}
 
 router.route('/delete/:username')
 	.get(function(req, res) {
