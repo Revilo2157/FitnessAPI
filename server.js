@@ -248,6 +248,7 @@ router.route('/update/:username/:workout/:amount')
 						if(userData.Challenges[i].completed)
 							continue;
 						if(userData.Challenges[i].workout.localeCompare(req.params.workout) == 0) {
+							console.log("Updating Challenge");
 							if(userData.Challenges[i].you + req.params.amount >= userData.Challenges[i].amount) {
 								userData.Challenges[i].you = userData.Challenges[i].amount;
 								if(userData.Challenges[i].them == userData.Challenges[i].amount) {
