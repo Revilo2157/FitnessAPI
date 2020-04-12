@@ -159,6 +159,7 @@ router.route('/update/:username/:workout/:amount')
 
 				var userData = JSON.parse(data);
 	  			var found = false;
+	  			var toAdd = parseInt(req.params.amount);
 	  			var newAmount = parseInt(req.params.amount);
 	  			for(let i = 0; i < userData.Stats.length; i++) {
 	  				if(userData.Stats[i].workout.localeCompare(req.params.workout) == 0) {
@@ -249,13 +250,13 @@ router.route('/update/:username/:workout/:amount')
 							continue;
 						if(userData.Challenges[i].workout.localeCompare(req.params.workout) == 0) {
 							console.log("Updating Challenge");
-							if(userData.Challenges[i].you + req.params.amount >= userData.Challenges[i].amount) {
+							if(userData.Challenges[i].you + toAdd >= userData.Challenges[i].amount) {
 								userData.Challenges[i].you = userData.Challenges[i].amount;
 								if(userData.Challenges[i].them == userData.Challenges[i].amount) {
 									userData.Challenges[i].completed = true;
 								}
 							} else {
-								userData.Challenges[i].you = userData.Challenges[i].you + req.params.amount;
+								userData.Challenges[i].you = userData.Challenges[i].you + toAdd;
 							}
 
 							opponent = userData.Challenges[i].opponent;
@@ -266,7 +267,7 @@ router.route('/update/:username/:workout/:amount')
 								}
 							}
 							if(!found) {
-								updateOpponent(opponent, req.params.username, req.params.workout, req.params.amount);
+								updateOpponent(opponent, req.params.username, req.params.workout, toAdd);
 							}
 
 						}
