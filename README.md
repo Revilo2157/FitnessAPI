@@ -44,7 +44,7 @@ Updates the user's information to include newly done workouts. Throws an excepti
       http://152.3.69.115:8081/api/update/username/workout/amount 
       
 ### Delete:
-Deletes the information of the user specified in the username field.
+Deletes the information of the user specified in the username field.  
 **Inputs:**  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Username:* The user whose data is to be deleted. 
 
@@ -58,7 +58,7 @@ Returns the leaderboard.
 ### Reset:
 Resets the leaderboard. This does not affect any user information. This is used to test the other methods.
 
-      http://152.3.69.115:8081/api/leaderboard  
+      http://152.3.69.115:8081/api/reset  
    
 ## Return Values:
 Most messages will be responded to with a message stating if they were successful or not. The exceptions to this are errors where an empty message is sent as well as information replies. There the JSON will follow this structure:
